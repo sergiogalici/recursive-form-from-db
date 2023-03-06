@@ -23,7 +23,20 @@ const schema = yup
   })
   .required();
 
-type FormData = yup.InferType<typeof schema>;
+type FormData = Omit<
+  yup.InferType<typeof schema>,
+  "address" | "city" | "postalCode" | "state"
+> &
+  AddressesType;
+
+type AddressesType = {
+  addresses: {
+    address: string;
+    postalCode: string;
+    city: string;
+    state: string;
+  }[];
+};
 
 const App = () => {
   const [numOfRecidencies, setNumOfRecidencies] = React.useState<number>(1);
@@ -32,7 +45,6 @@ const App = () => {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
@@ -78,27 +90,27 @@ const App = () => {
                 <p>Recidence # {i + 1}</p>
                 <input
                   placeholder={`Enter Residence #${i + 1} address`}
-                  {...register("address")}
+                  {...register(`addresses.${i}.address`)}
                 />
-                <p>{errors.address?.message}</p>
+                <p>{errors.addresses?.[i]?.address?.message}</p>
 
                 <input
                   placeholder={`Enter Residence #${i + 1} postal code`}
-                  {...register("postalCode")}
+                  {...register(`addresses.${i}.postalCode`)}
                 />
-                <p>{errors.postalCode?.message}</p>
+                <p>{errors.addresses?.[i]?.postalCode?.message}</p>
 
                 <input
                   placeholder={`Enter Residence #${i + 1} city`}
-                  {...register("city")}
+                  {...register(`addresses.${i}.city`)}
                 />
-                <p>{errors.city?.message}</p>
+                <p>{errors.addresses?.[i]?.city?.message}</p>
 
                 <input
                   placeholder={`Enter Residence #${i + 1} state`}
-                  {...register("state")}
+                  {...register(`addresses.${i}.state`)}
                 />
-                <p>{errors.state?.message}</p>
+                <p>{errors.addresses?.[i]?.state?.message}</p>
               </div>
             );
           })

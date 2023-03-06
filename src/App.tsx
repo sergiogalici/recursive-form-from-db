@@ -73,7 +73,6 @@ const App = () => {
       <div className="recidencies">
         {Array.from(Array(numOfRecidencies)).length ? (
           Array.from(Array(numOfRecidencies)).map((_, i) => {
-            console.log("we are here");
             return (
               <div key={Date.now() * Math.random()}>
                 <p>Recidence # {i + 1}</p>

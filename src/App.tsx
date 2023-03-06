@@ -20,23 +20,18 @@ const schema = yup
     city: yup.string().required(),
     postalCode: yup.string().required(),
     state: yup.string().required(),
+    addresses: yup.array().of(
+      yup.object().shape({
+        address: yup.string().required(),
+        postalCode: yup.string().required(),
+        city: yup.string().required(),
+        state: yup.string().required(),
+      })
+    ),
   })
   .required();
 
-type FormData = Omit<
-  yup.InferType<typeof schema>,
-  "address" | "city" | "postalCode" | "state"
-> &
-  AddressesType;
-
-type AddressesType = {
-  addresses: {
-    address: string;
-    postalCode: string;
-    city: string;
-    state: string;
-  }[];
-};
+type FormData = yup.InferType<typeof schema>;
 
 const App = () => {
   const [numOfRecidencies, setNumOfRecidencies] = React.useState<number>(1);

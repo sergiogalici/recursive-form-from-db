@@ -1,118 +1,65 @@
 import React from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { useForm, SubmitHandler } from "react-hook-form";
 
-const schema = yup
-  .object({
-    firstName: yup.string().required(),
-    lastName: yup.string().required(),
-    email: yup.string().email(),
-    age: yup.number().positive().integer().required().min(18).max(99),
-    numberOfRecidencies: yup
-      .number()
-      .positive()
-      .integer()
-      .required()
-      .min(1)
-      .max(99),
-    address: yup.string().required(),
-    city: yup.string().required(),
-    postalCode: yup.string().required(),
-    state: yup.string().required(),
-    addresses: yup.array().of(
-      yup.object().shape({
-        address: yup.string().required(),
-        postalCode: yup.string().required(),
-        city: yup.string().required(),
-        state: yup.string().required(),
-      })
-    ),
-  })
-  .required();
+interface IFormInputs {
+  firstName: string;
+  lastName: string;
+  numberOfRecidencies: number;
+  addresses: AddressType[];
+}
 
-type FormData = yup.InferType<typeof schema>;
+type AddressType = {
+  address: string;
+  city: string;
+};
+
+const onSubmit: SubmitHandler<IFormInputs> = (data) => console.log(data);
 
 const App = () => {
-  const [numOfRecidencies, setNumOfRecidencies] = React.useState<number>(1);
-
   const {
     register,
-    handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
-    resolver: yupResolver(schema),
+    handleSubmit,
+    watch,
+  } = useForm<IFormInputs>({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      numberOfRecidencies: 1,
+    },
   });
 
-  const onSubmit = (data: FormData) => console.log(data);
+  const selectedResidencies = Number(watch("numberOfRecidencies"));
+
+  const arrOfRes = Array.from(Array(selectedResidencies));
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input placeholder="Enter your first name" {...register("firstName")} />
-      <p>{errors.firstName?.message}</p>
-
-      <input placeholder="Enter your last name" {...register("lastName")} />
-      <p>{errors.lastName?.message}</p>
-
-      <label htmlFor="age">Enter your age</label>
-      <input
-        min={18}
-        max={99}
-        defaultValue={18}
-        type="number"
-        {...register("age")}
-      />
-      <p>{errors.age?.message}</p>
-
-      <input placeholder="Enter your email" {...register("email")} />
-      <p>{errors.email?.message}</p>
-
-      <label htmlFor="numberOfRecidencies">Select number of recidencies</label>
+      <input {...register("firstName", { required: true })} />
+      {errors.firstName && "First name is required"}
+      <input {...register("lastName", { required: true })} />
+      {errors.lastName && "Last name is required"}
       <input
         min={1}
-        defaultValue={1}
         type="number"
-        {...register("numberOfRecidencies")}
-        onChange={(e) => setNumOfRecidencies(Number(e.target.value))}
+        {...register("numberOfRecidencies", { min: 1 })}
       />
-      <p>{errors.numberOfRecidencies?.message}</p>
-
-      <div className="recidencies">
-        {Array.from(Array(numOfRecidencies)).length ? (
-          Array.from(Array(numOfRecidencies)).map((_, i) => {
-            return (
-              <div key={Date.now() * Math.random()}>
-                <p>Recidence # {i + 1}</p>
-                <input
-                  placeholder={`Enter Residence #${i + 1} address`}
-                  {...register(`addresses.${i}.address`)}
-                />
-                <p>{errors.addresses?.[i]?.address?.message}</p>
-
-                <input
-                  placeholder={`Enter Residence #${i + 1} postal code`}
-                  {...register(`addresses.${i}.postalCode`)}
-                />
-                <p>{errors.addresses?.[i]?.postalCode?.message}</p>
-
-                <input
-                  placeholder={`Enter Residence #${i + 1} city`}
-                  {...register(`addresses.${i}.city`)}
-                />
-                <p>{errors.addresses?.[i]?.city?.message}</p>
-
-                <input
-                  placeholder={`Enter Residence #${i + 1} state`}
-                  {...register(`addresses.${i}.state`)}
-                />
-                <p>{errors.addresses?.[i]?.state?.message}</p>
-              </div>
-            );
-          })
-        ) : (
-          <></>
-        )}
-      </div>
+      {errors.numberOfRecidencies && "Not a valid input"}
+      {arrOfRes.map((_, i) => {
+        return (
+          <div key={Date.now() * Math.random()} className="input-container">
+            <p>Address #{i + 1}</p>
+            <input
+              placeholder={`Insert address`}
+              {...register(`addresses.${i}.address`)}
+            />
+            <input
+              placeholder={`Insert city`}
+              {...register(`addresses.${i}.city`)}
+            />
+          </div>
+        );
+      })}
 
       <input type="submit" />
     </form>

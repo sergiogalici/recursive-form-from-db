@@ -1,10 +1,10 @@
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 
 interface IFormInputs {
   firstName: string;
   lastName: string;
-  numberOfRecidencies: number;
+  email: string;
   addresses: AddressType[];
 }
 
@@ -18,6 +18,7 @@ const onSubmit: SubmitHandler<IFormInputs> = (data) => console.log(data);
 const App = () => {
   const {
     register,
+    control,
     formState: { errors },
     handleSubmit,
     watch,
@@ -25,13 +26,13 @@ const App = () => {
     defaultValues: {
       firstName: "",
       lastName: "",
-      numberOfRecidencies: 1,
     },
   });
 
-  const selectedResidencies = Number(watch("numberOfRecidencies"));
-
-  const arrOfRes = Array.from(Array(selectedResidencies));
+  const { fields, append, remove } = useFieldArray({
+    name: "addresses",
+    control,
+  });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -45,14 +46,24 @@ const App = () => {
         {...register("lastName", { required: true })}
       />
       {errors.lastName && "Last name is required"}
-      <p>How many residencies do you have?</p>
       <input
-        min={1}
-        type="number"
-        {...register("numberOfRecidencies", { min: 1 })}
+        type="email"
+        placeholder="Insert your email"
+        {...register("email", { required: true, minLength: 10 })}
       />
-      {errors.numberOfRecidencies && "Not a valid input"}
-      {arrOfRes.map((_, i) => {
+      {errors.email && errors.email.message}
+      <p>How many residencies do you have?</p>
+      <button
+        onClick={() =>
+          append({
+            address: "",
+            city: "",
+          })
+        }
+      >
+        Add a residence
+      </button>
+      {fields.map((_, i) => {
         return (
           <div key={Date.now() * Math.random()} className="input-container">
             <p>Address #{i + 1}</p>
@@ -64,6 +75,7 @@ const App = () => {
               placeholder={`Insert city`}
               {...register(`addresses.${i}.city`)}
             />
+            <button onClick={() => remove(i)}>Remove residence</button>
           </div>
         );
       })}

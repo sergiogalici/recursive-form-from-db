@@ -35,10 +35,17 @@ const App = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register("firstName", { required: true })} />
+      <input
+        placeholder="Insert your name"
+        {...register("firstName", { required: true })}
+      />
       {errors.firstName && "First name is required"}
-      <input {...register("lastName", { required: true })} />
+      <input
+        placeholder="Insert your last name"
+        {...register("lastName", { required: true })}
+      />
       {errors.lastName && "Last name is required"}
+      <p>How many residencies do you have?</p>
       <input
         min={1}
         type="number"

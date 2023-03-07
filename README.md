@@ -1,46 +1,81 @@
-# Getting Started with Create React App
+##### `Introduzione`
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React Hook Form è una libreria che fornisce funzionalità per
+la creazione di form complessi, annidati e che possono espandersi su più
+componenti.
+Con le sue 6 API permette di astrarrare molta della logica dai componenti
+e fare in modo che questi siano più incentrati sul render della view
+piuttosto che essere carichi di logica di business.
+Inoltre, la gestione dello stato del form da parte del browser, evita
+render superflui e migliora la performance.
 
-## Available Scripts
+##### `Utilizzo`
 
-In the project directory, you can run:
+​
+React Hook Form utilizza il concetto di "uncontrolled components", ovvero componenti di form il cui valore è gestito direttamente dal browser, senza utilizzare lo stato di React. Ciò significa che non è necessario aggiornare lo stato del form ogni volta che l'utente modifica un campo di input.
+​
+Per utilizzare React Hook Form, è sufficiente importare l'hook useForm e invocarlo nel componente di form:
 
-### `npm start`
+**_ esempio _**
+​
+import { useForm } from 'react-hook-form';
+​
+function MyForm() {
+const { register, handleSubmit } = useForm();
+​
+const onSubmit = (data) => {
+console.log(data);
+}
+​
+return (
+​
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<form onSubmit={handleSubmit(onSubmit)}>
+<input name="firstName" ref={register} />
+<input name="lastName" ref={register} />
+<button type="submit">Submit</button>
+</form>
+);
+}
+​
+In questo esempio, register viene utilizzato per registrare gli input del form, mentre handleSubmit viene utilizzato per gestire l'invio del form. L'oggetto data passato alla funzione onSubmit contiene i valori dei campi di input registrati.
+​
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+###### `Note personali`
 
-### `npm test`
+Una cosa da notare, tra le tante, è che il sistema di validazione offerto da React Hook Form presenta molte lacune e tanti aspetti che non sarebbe possibile gestire altrimenti in runtime.
+Utilizzare una libreria di validazione come yup ed utilizzare il resolver di yup come resolver per RHF, è sicuramente una strategia migliore, poiché permette di aggiungere
+funzionalità altrimenti non presenti all'interno della libreria, come la possbilità di validare un campo email solamente quando presenta una struttura valida.
+La libreria yup inoltre permette, attraverso la sua api, di inserire una validazione custom attraverso il parametro "test" dell'oggetto yup.
+Ad esempio, se vogliamo che una mail valida debba finire soltanto con ".com", possiamo scrivere:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**_ esempio _**
 
-### `npm run build`
+email: yup.string().email().test('is-valid-email', 'L\'email deve essere valida', (value) => {
+return value.endsWith('@gmail.com');
+})
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+In questo modo sarà possibile avere qualsiasi tipo di validazione, anche per gli input e le select con i campi più inaspettati.
+Una possibilità potrebbe essere quella di validare il campo del comune di residenza a partire da una lista di comuni di un determinato stato ottenuti dai dati forniti da un'API.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Un altro esempio ancora, potrebbe essere il caso in cui abbiamo un oggetto e almeno uno dei suoi valori deve essere vero.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**_esempio_**
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+const edLevelsSchema = yup
+  .object()
+  .shape({
+    earlyEducation: yup.boolean(),
+    elementarySchool: yup.boolean(),
+    middleSchool: yup.boolean(),
+    highSchool: yup.boolean(),
+    college: yup.boolean(),
+    graduateSchool: yup.boolean(),
+    phd: yup.boolean(),
+  })
+  .test({
+    test: (values) => {
+      return Object.values(values ?? [false]).some((val) => val === true);
+    },
+    message: "At least one educational level must be selected",
+  });

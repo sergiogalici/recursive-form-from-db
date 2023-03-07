@@ -22,6 +22,10 @@ code {
   align-items: center;
 }
 
+.container {
+  border: 2px solid black;
+}
+
 .recidencies {
   overflow: auto;
   max-height: 270px;

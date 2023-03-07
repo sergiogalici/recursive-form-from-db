@@ -14,7 +14,19 @@ const edLevels = [
   "phd",
 ];
 
+const cuisines = [
+  "italian",
+  "american",
+  "mexican",
+  "thai",
+  "chinese",
+  "japanese",
+  "korean",
+];
+
 const edLevelsSchema = yup.string().oneOf(edLevels);
+
+const favouriteCuisinesSchema = yup.string().oneOf(cuisines);
 
 const schema = yup
   .object({
@@ -37,9 +49,11 @@ const schema = yup
         name: yup.string().required(),
         age: yup.number().positive().min(1).max(99),
         educationalLevels: edLevelsSchema,
+        favouriteCuisine: favouriteCuisinesSchema,
       })
     ),
     educationalLevels: edLevelsSchema,
+    favouriteCuisine: favouriteCuisinesSchema,
   })
   .required();
 
@@ -99,8 +113,19 @@ const App = () => {
         {...register("email", { required: true, minLength: 10 })}
       />
       <p>{errors.email?.message}</p>
+      <p>Select an Education Level</p>
       <select {...register(`educationalLevels`)}>
         {edLevels.map((level, i) => {
+          return (
+            <option key={Date.now() * Math.random()} value={level}>
+              {level}
+            </option>
+          );
+        })}
+      </select>
+      <p>Select a favourite cuisine</p>
+      <select {...register(`favouriteCuisine`)}>
+        {cuisines.map((level, i) => {
           return (
             <option key={Date.now() * Math.random()} value={level}>
               {level}
@@ -157,8 +182,20 @@ const App = () => {
             <p>
               {errors.totalChildren && errors.totalChildren[i]?.age?.message}
             </p>
+            <p>Select an Education Level</p>
             <select {...register(`totalChildren.${i}.educationalLevels`)}>
               {edLevels.map((level) => {
+                return (
+                  <option key={Date.now() * Math.random()} value={level}>
+                    {level}
+                  </option>
+                );
+              })}
+            </select>
+            <p>Select a favourite cuisine</p>
+
+            <select {...register(`totalChildren.${i}.favouriteCuisine`)}>
+              {cuisines.map((level, i) => {
                 return (
                   <option key={Date.now() * Math.random()} value={level}>
                     {level}

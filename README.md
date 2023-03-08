@@ -14,32 +14,6 @@ render superflui e migliora la performance.
 ​
 React Hook Form utilizza il concetto di "uncontrolled components", ovvero componenti di form il cui valore è gestito direttamente dal browser, senza utilizzare lo stato di React. Ciò significa che non è necessario aggiornare lo stato del form ogni volta che l'utente modifica un campo di input.
 ​
-Per utilizzare React Hook Form, è sufficiente importare l'hook useForm e invocarlo nel componente di form:
-
-**_ esempio _**
-​
-import { useForm } from 'react-hook-form';
-​
-function MyForm() {
-const { register, handleSubmit } = useForm();
-​
-const onSubmit = (data) => {
-console.log(data);
-}
-​
-return (
-​
-
-<form onSubmit={handleSubmit(onSubmit)}>
-<input name="firstName" ref={register} />
-<input name="lastName" ref={register} />
-<button type="submit">Submit</button>
-</form>
-);
-}
-​
-In questo esempio, register viene utilizzato per registrare gli input del form, mentre handleSubmit viene utilizzato per gestire l'invio del form. L'oggetto data passato alla funzione onSubmit contiene i valori dei campi di input registrati.
-​
 
 ###### `Note personali`
 

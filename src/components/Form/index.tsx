@@ -9,7 +9,7 @@ export const Form = (props: any) => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <Input />
+        <Input id={props.data.firstName} />
       </form>
     </FormProvider>
   );

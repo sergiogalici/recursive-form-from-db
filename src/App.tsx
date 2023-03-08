@@ -83,7 +83,7 @@ const App = () => {
     resolver: yupResolver(schema),
   });
 
-  return <Form />;
+  return <Form data={{ firstName: "firstName", lastName: "lastName" }} />;
 };
 
 export default App;

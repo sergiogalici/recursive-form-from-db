@@ -46,6 +46,9 @@ In questo esempio, register viene utilizzato per registrare gli input del form, 
 Uno dei punti di forza della libreria RFH è sicuramente l'utlizzo di componenti non controllati e slegati dallo stato, che permettono di aggiornare lo stato (anche collegato a redux) senza a dover fare render superflui.
 Le API di RHF sono principalmente sei:useForm, useController, useFormContext, useWatch e useFormState.
 
+useFieldArray dell'API useFrom di RHF è un potente strumento che permette di "guardare" lo stato di campi del form che sono pensati come un'insieme di elementi (si pensi al campo "figli", dove ognuno di loro porta con sé un sotto-form annidato uguale per ognuno di loro).
+Questo ci permette di renderizzare nuovi formi all'aggiunta di un campo in queste liste e di andare a manipolare dinamicamente lo stato di queste a partire da un indice.
+
 Una cosa da notare, tra le tante, è che il sistema di validazione offerto da React Hook Form presenta molte lacune e tanti aspetti che non sarebbe possibile gestire altrimenti in runtime.
 Utilizzare una libreria di validazione come yup ed utilizzare il resolver di yup come resolver per RHF, è sicuramente una strategia migliore, poiché permette di aggiungere
 funzionalità altrimenti non presenti all'interno della libreria, come la possbilità di validare un campo email solamente quando presenta una struttura valida.

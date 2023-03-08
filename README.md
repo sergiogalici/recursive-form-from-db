@@ -24,8 +24,8 @@ Le API di RHF sono principalmente sei:useForm, useController, useFormContext, us
 
 `useFieldArray hook`
 
-useFieldArray dell'API useFrom di RHF è un potente strumento che permette di "guardare" lo stato di campi del form che sono pensati come un'insieme di elementi (si pensi al campo "figli", dove ognuno di loro porta con sé un sotto-form annidato uguale per ognuno di loro).
-Questo ci permette di renderizzare nuovi formi all'aggiunta di un campo in queste liste e di andare a manipolare dinamicamente lo stato di queste a partire da un indice.
+useFieldArray dell'API useFrom di RHF è un potente strumento che permette di "guardare" lo stato di campi del form che sono pensati come un'insieme di elementi (si pensi ad un campo "figli", dove ognuno di loro porta con sé un sotto-form annidato uguale per ognuno di loro, ad esempio un form con nome, cognome e livello di istruzione).
+Questo ci permette di renderizzare nuovi form all'aggiunta di un campo in queste liste e di andare a manipolare dinamicamente lo stato di queste a partire da un indice.
 
 `getFieldState hook`
 

@@ -1,5 +1,5 @@
 import { PayloadAction, createAction, createSlice } from "@reduxjs/toolkit";
-import { FormData } from "./../../App";
+import { FormData } from "../../App";
 import { FormsState } from "./model";
 
 const initialState: FormsState = {

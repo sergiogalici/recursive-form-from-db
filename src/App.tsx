@@ -1,10 +1,9 @@
 import React from "react";
-import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form/dist/useForm";
+import { FormProvider } from "react-hook-form/dist/useFormContext";
+import { Form } from "./components/Form";
 import * as yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
-import { formsActions } from "./features/forms/reducers";
-import { selectAllForms } from "./features/forms/selector";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const edLevels = [
   "earlyEducation",
@@ -63,6 +62,7 @@ const schema = yup
 export type FormData = yup.InferType<typeof schema>;
 
 const App = () => {
+  const methods = useForm();
   const {
     register,
     control,
@@ -110,9 +110,13 @@ const App = () => {
   };
 
   const forms = useSelector(selectAllForms);
-
   return (
-    
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <Form />
+        <input type="submit" />
+      </form>
+    </FormProvider>
   );
 };
 

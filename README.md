@@ -43,6 +43,9 @@ In questo esempio, register viene utilizzato per registrare gli input del form, 
 
 ###### `Note personali`
 
+Uno dei punti di forza della libreria RFH è sicuramente l'utlizzo di componenti non controllati e slegati dallo stato, che permettono di aggiornare lo stato (anche collegato a redux) senza a dover fare render superflui.
+Le API di RHF sono principalmente sei:useForm, useController, useFormContext, useWatch e useFormState.
+
 Una cosa da notare, tra le tante, è che il sistema di validazione offerto da React Hook Form presenta molte lacune e tanti aspetti che non sarebbe possibile gestire altrimenti in runtime.
 Utilizzare una libreria di validazione come yup ed utilizzare il resolver di yup come resolver per RHF, è sicuramente una strategia migliore, poiché permette di aggiungere
 funzionalità altrimenti non presenti all'interno della libreria, come la possbilità di validare un campo email solamente quando presenta una struttura valida.
@@ -63,19 +66,22 @@ Un altro esempio ancora, potrebbe essere il caso in cui abbiamo un oggetto e alm
 **_esempio_**
 
 const edLevelsSchema = yup
-  .object()
-  .shape({
-    earlyEducation: yup.boolean(),
-    elementarySchool: yup.boolean(),
-    middleSchool: yup.boolean(),
-    highSchool: yup.boolean(),
-    college: yup.boolean(),
-    graduateSchool: yup.boolean(),
-    phd: yup.boolean(),
-  })
-  .test({
-    test: (values) => {
-      return Object.values(values ?? [false]).some((val) => val === true);
-    },
-    message: "At least one educational level must be selected",
-  });
+.object()
+.shape({
+earlyEducation: yup.boolean(),
+elementarySchool: yup.boolean(),
+middleSchool: yup.boolean(),
+highSchool: yup.boolean(),
+college: yup.boolean(),
+graduateSchool: yup.boolean(),
+phd: yup.boolean(),
+})
+.test({
+test: (values) => {
+return Object.values(values ?? [false]).some((val) => val === true);
+},
+message: "At least one educational level must be selected",
+});
+
+L'API useForm di RHF offre una funzione setError che dovrebbe avere lo scopo di creare gli errori custom, ma le sue potenzialità sono sensibilmente inferiori rispetto a quelle di yup.
+In definitiva, l'utilizzo di RHF in tandem con yup permette l'implementazione di validazioni complesse anche per i casi più specifici.

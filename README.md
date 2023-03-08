@@ -43,19 +43,31 @@ In questo esempio, register viene utilizzato per registrare gli input del form, 
 
 ###### `Note personali`
 
+`Uncontrolled components`
+
 Uno dei punti di forza della libreria RFH è sicuramente l'utlizzo di componenti non controllati e slegati dallo stato, che permettono di aggiornare lo stato (anche collegato a redux) senza a dover fare render superflui.
 Le API di RHF sono principalmente sei:useForm, useController, useFormContext, useWatch e useFormState.
+
+`useFieldArray hook`
 
 useFieldArray dell'API useFrom di RHF è un potente strumento che permette di "guardare" lo stato di campi del form che sono pensati come un'insieme di elementi (si pensi al campo "figli", dove ognuno di loro porta con sé un sotto-form annidato uguale per ognuno di loro).
 Questo ci permette di renderizzare nuovi formi all'aggiunta di un campo in queste liste e di andare a manipolare dinamicamente lo stato di queste a partire da un indice.
 
+`getFieldState hook`
+
 L'API di RHF ci permette inoltre di de-strutturare lo stato di form complessi e annidati in più livelli di profondità attraverso l'hook getFieldState, comodo quando, nella parte opposta di un form, abbiamo nuovamente bisogno di un valore presente in un sotto-form annidato altrove.
 
+`useController API`
+
 L'API useController ci permette di lavorare con select ed input non-nativi, come quelle di MUI, AntDesign e React-Select. Component ci offre un componente che andrà ad avvolgere quello della libreria che stiamo usando per iniettare i valori corretti nel momento in cui verrà idratato. E' da notare che il funzionamento di questa API non è perfetto ed è poco intuitivo, finendo spesso ad aggiungere più complessità di quella che dovrebbe essere invece astratta dallo sviluppatore.
+
+`useFormContext API`
 
 Una delle API sicuramente meglio riuscite è l'useFormContext che, come è semplice intuire, fornisce un contesto dove avvolgere il nostro form complesso per iniettare in quest'ultimo i valori che dovrà andare a portare alla view.
 Questa funzionalità non viene comunque senza un prezzo, che è quello della sua complessità: sono numerosi i valori da dover tenere d'occhio durante l'iniezione dello stato del form, circa una ventina stando alla documentazione ufficiale.
 Questo tuttavia ci fornisce grande controllo sul form che andremo ad avviluppare nel contesto, come la possibilità di controllare quante volte un contenuto è stato sottoposto, se il form (o uno o più dei suoi sottoform) si stanno attualmente caricando, se il processo di validazione è attualmente in atto o lo stato della validazione al momento del suo termine e altro ancora, come concetti interni alla libreria come quello della "sporcizia" (dirtiness) e "tocco" (touched).
+
+`yup validation`
 
 Una cosa da notare, tra le tante, è che il sistema di validazione offerto da React Hook Form presenta molte lacune e tanti aspetti che non sarebbe possibile gestire altrimenti in runtime.
 Utilizzare una libreria di validazione come yup ed utilizzare il resolver di yup come resolver per RHF, è sicuramente una strategia migliore, poiché permette di aggiungere

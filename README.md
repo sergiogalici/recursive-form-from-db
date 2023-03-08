@@ -49,13 +49,20 @@ Le API di RHF sono principalmente sei:useForm, useController, useFormContext, us
 useFieldArray dell'API useFrom di RHF è un potente strumento che permette di "guardare" lo stato di campi del form che sono pensati come un'insieme di elementi (si pensi al campo "figli", dove ognuno di loro porta con sé un sotto-form annidato uguale per ognuno di loro).
 Questo ci permette di renderizzare nuovi formi all'aggiunta di un campo in queste liste e di andare a manipolare dinamicamente lo stato di queste a partire da un indice.
 
+L'API di RHF ci permette inoltre di de-strutturare lo stato di form complessi e annidati in più livelli di profondità attraverso l'hook getFieldState, comodo quando, nella parte opposta di un form, abbiamo nuovamente bisogno di un valore presente in un sotto-form annidato altrove.
+
+L'API useController ci permette di lavorare con select ed input non-nativi, come quelle di MUI, AntDesign e React-Select. Component ci offre un componente che andrà ad avvolgere quello della libreria che stiamo usando per iniettare i valori corretti nel momento in cui verrà idratato. E' da notare che il funzionamento di questa API non è perfetto ed è poco intuitivo, finendo spesso ad aggiungere più complessità di quella che dovrebbe essere invece astratta dallo sviluppatore.
+
+Una delle API sicuramente meglio riuscite è l'useFormContext che, come è semplice intuire, fornisce un contesto dove avvolgere il nostro form complesso per iniettare in quest'ultimo i valori che dovrà andare a portare alla view.
+Questa funzionalità non viene comunque senza un prezzo, che è quello della sua complessità: sono numerosi i valori da dover tenere d'occhio durante l'iniezione dello stato del form, circa una trentina stando alla documentazione ufficiale.
+
 Una cosa da notare, tra le tante, è che il sistema di validazione offerto da React Hook Form presenta molte lacune e tanti aspetti che non sarebbe possibile gestire altrimenti in runtime.
 Utilizzare una libreria di validazione come yup ed utilizzare il resolver di yup come resolver per RHF, è sicuramente una strategia migliore, poiché permette di aggiungere
 funzionalità altrimenti non presenti all'interno della libreria, come la possbilità di validare un campo email solamente quando presenta una struttura valida.
 La libreria yup inoltre permette, attraverso la sua api, di inserire una validazione custom attraverso il parametro "test" dell'oggetto yup.
 Ad esempio, se vogliamo che una mail valida debba finire soltanto con ".com", possiamo scrivere:
 
-**_ esempio _**
+**_esempio_**
 
 email: yup.string().email().test('is-valid-email', 'L\'email deve essere valida', (value) => {
 return value.endsWith('@gmail.com');

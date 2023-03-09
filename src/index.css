@@ -15,22 +15,6 @@ code {
     monospace;
 }
 
-.form-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.container {
-  border: 2px solid black;
-}
-
-.recidencies {
-  overflow: auto;
-  max-height: 270px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+input {
+  width: 300px;
 }

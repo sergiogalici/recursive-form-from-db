@@ -62,7 +62,7 @@ export const simpleForm: FormType = {
     {
       type: "subForm",
       id: "children",
-      subform: [
+      subforms: [
         {
           form: [
             { type: "input", id: "children.0.childName" },
@@ -89,6 +89,18 @@ export const simpleForm: FormType = {
             },
           ],
         },
+        {
+          form: [
+            { type: "input", id: "pets.0.petName" },
+            { type: "input", id: "pets.0.age", isInputTypeNumber: true },
+          ],
+        },
+        {
+          form: [
+            { type: "input", id: "pets.1.petName" },
+            { type: "input", id: "pets.1.age", isInputTypeNumber: true },
+          ],
+        },
       ],
     },
   ],
@@ -101,12 +113,7 @@ export type FieldType = {
   id: string;
   isInputTypeNumber?: boolean;
   children?: FieldType[];
-  subform?: FormType[];
-};
-
-type SubFormType = {
-  subFormName: string;
-  form: FieldType[];
+  subforms?: FormType[];
 };
 
 export type FormType = {

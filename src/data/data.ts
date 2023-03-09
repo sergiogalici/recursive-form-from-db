@@ -1,6 +1,48 @@
 import { Schema, SchemaFieldDescription } from "yup";
 import * as yup from "yup";
 
+const cuisines: FieldType[] = [
+  {
+    type: "option",
+    id: "italian",
+  },
+  {
+    type: "option",
+    id: "mexican",
+  },
+  {
+    type: "option",
+    id: "thai",
+  },
+];
+
+const edLevels: FieldType[] = [
+  {
+    type: "option",
+    id: "elementarySchool",
+  },
+  {
+    type: "option",
+    id: "middleSchool",
+  },
+  {
+    type: "option",
+    id: "highSchool",
+  },
+  {
+    type: "option",
+    id: "college",
+  },
+  {
+    type: "option",
+    id: "graduationDegree",
+  },
+  {
+    type: "option",
+    id: "phd",
+  },
+];
+
 export const simpleForm: FormType = {
   form: [
     {
@@ -14,59 +56,35 @@ export const simpleForm: FormType = {
     {
       type: "select",
       id: "favouriteCuisine",
-      children: [
-        {
-          type: "option",
-          id: "italian",
-        },
-        {
-          type: "option",
-          id: "mexican",
-        },
-        {
-          type: "option",
-          id: "thai",
-        },
-      ],
+      children: cuisines,
     },
     {
       type: "select",
       id: "educationLevel",
-      children: [
-        {
-          type: "option",
-          id: "elementarySchool",
-        },
-        {
-          type: "option",
-          id: "middleSchool",
-        },
-        {
-          type: "option",
-          id: "highSchool",
-        },
-        {
-          type: "option",
-          id: "college",
-        },
-        {
-          type: "option",
-          id: "graduationDegree",
-        },
-        {
-          type: "option",
-          id: "phd",
-        },
-      ],
+      children: edLevels,
     },
     {
       type: "subForm",
-      id: "children",
+      id: "Child",
       subforms: [
         {
           form: [
             { type: "input", id: "children.0.childName" },
-            { type: "input", id: "children.0.age", isInputTypeNumber: true },
+            {
+              type: "input",
+              id: "children.0.childAge",
+              isInputTypeNumber: true,
+            },
+            {
+              type: "select",
+              id: "children.0.educationLevel",
+              children: edLevels,
+            },
+            {
+              type: "select",
+              id: "children.0.favouriteCuisine",
+              children: cuisines,
+            },
           ],
         },
         {
@@ -76,6 +94,16 @@ export const simpleForm: FormType = {
               type: "input",
               id: "children.1.childAge",
               isInputTypeNumber: true,
+            },
+            {
+              type: "select",
+              id: "children.1.educationLevel",
+              children: edLevels,
+            },
+            {
+              type: "select",
+              id: "children.1.favouriteCuisine",
+              children: cuisines,
             },
           ],
         },
@@ -87,18 +115,34 @@ export const simpleForm: FormType = {
               id: "children.2.childAge",
               isInputTypeNumber: true,
             },
+            {
+              type: "select",
+              id: "children.2.educationLevel",
+              children: edLevels,
+            },
+            {
+              type: "select",
+              id: "children.2.favouriteCuisine",
+              children: cuisines,
+            },
           ],
         },
+      ],
+    },
+    {
+      type: "subForm",
+      id: "Pet",
+      subforms: [
         {
           form: [
             { type: "input", id: "pets.0.petName" },
-            { type: "input", id: "pets.0.age", isInputTypeNumber: true },
+            { type: "input", id: "pets.0.petAge", isInputTypeNumber: true },
           ],
         },
         {
           form: [
             { type: "input", id: "pets.1.petName" },
-            { type: "input", id: "pets.1.age", isInputTypeNumber: true },
+            { type: "input", id: "pets.1.petAge", isInputTypeNumber: true },
           ],
         },
       ],

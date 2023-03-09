@@ -1,6 +1,7 @@
 import React from "react";
 import { FieldType } from "../../../data/data";
 import { useFormContext } from "react-hook-form";
+import { stringFormatter } from "../../../utils/stringFormatter";
 
 type SelectPropsType = {
   id: string;
@@ -17,7 +18,7 @@ export const Select = ({ id, dataChildren }: SelectPropsType) => {
           dataChildren.map((child) => {
             return (
               <option key={child.id} value={child.id}>
-                {child.id}
+                {stringFormatter(child.id)}
               </option>
             );
           })}

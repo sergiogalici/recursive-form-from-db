@@ -43,117 +43,69 @@ const edLevels: FieldType[] = [
   },
 ];
 
-export const simpleForm: FormType = {
-  form: [
-    {
-      type: "input",
-      id: "firstName",
-    },
-    {
-      type: "input",
-      id: "lastName",
-    },
-    {
-      type: "select",
-      id: "favouriteCuisine",
-      children: cuisines,
-    },
-    {
-      type: "select",
-      id: "educationLevel",
-      children: edLevels,
-    },
-    {
-      type: "subForm",
-      id: "Child",
-      subforms: [
-        {
-          form: [
-            { type: "input", id: "children.0.childName" },
-            {
-              type: "input",
-              id: "children.0.childAge",
-              isInputTypeNumber: true,
-            },
-            {
-              type: "select",
-              id: "children.0.educationLevel",
-              children: edLevels,
-            },
-            {
-              type: "select",
-              id: "children.0.favouriteCuisine",
-              children: cuisines,
-            },
-          ],
-        },
-        {
-          form: [
-            { type: "input", id: "children.1.childName" },
-            {
-              type: "input",
-              id: "children.1.childAge",
-              isInputTypeNumber: true,
-            },
-            {
-              type: "select",
-              id: "children.1.educationLevel",
-              children: edLevels,
-            },
-            {
-              type: "select",
-              id: "children.1.favouriteCuisine",
-              children: cuisines,
-            },
-          ],
-        },
-        {
-          form: [
-            { type: "input", id: "children.2.childName" },
-            {
-              type: "input",
-              id: "children.2.childAge",
-              isInputTypeNumber: true,
-            },
-            {
-              type: "select",
-              id: "children.2.educationLevel",
-              children: edLevels,
-            },
-            {
-              type: "select",
-              id: "children.2.favouriteCuisine",
-              children: cuisines,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      type: "subForm",
-      id: "Pet",
-      subforms: [
-        {
-          form: [
-            { type: "input", id: "pets.0.petName" },
-            { type: "input", id: "pets.0.petAge", isInputTypeNumber: true },
-          ],
-        },
-        {
-          form: [
-            { type: "input", id: "pets.1.petName" },
-            { type: "input", id: "pets.1.petAge", isInputTypeNumber: true },
-          ],
-        },
-      ],
-    },
-  ],
-};
+export const formConfig: FieldType[] = [
+  {
+    type: "input-text",
+    id: "firstName",
+  },
+  {
+    type: "input",
+    id: "lastName",
+  },
+  {
+    type: "select",
+    id: "favouriteCuisine",
+    children: cuisines,
+  },
+  {
+    type: "select",
+    id: "educationLevel",
+    children: edLevels,
+  },
+  {
+    type: "subForm",
+    id: "children",
+    multiple: true,
+    children: [
+      { type: "input", id: "name" },
+      {
+        type: "input",
+        id: "age",
+        isInputTypeNumber: true,
+      },
+      {
+        type: "select",
+        id: "educationLevel",
+        children: edLevels,
+      },
+      {
+        type: "select",
+        id: "favouriteCuisine",
+        children: cuisines,
+      },
+    ],
+  },
+  {
+    type: "subForm",
+    id: "pets",
+    children: [
+      { type: "input", id: "petName" },
+      { type: "input-number", id: "petAge" },
+    ],
+  },
+];
 
-export type SimpleFormType = FormType & typeof simpleForm;
+/**
+ * 2 children
+ * 3 pets
+ *
+ *
+ */
+
+export type FormConfigType = FormType & typeof formConfig;
 
 export type FieldType = {
-  type: "input" | "select" | "checkbox" | "option" | "subForm";
+  type: InputType | "select" | "checkbox" | "option" | "subForm";
   id: string;
   isInputTypeNumber?: boolean;
   children?: FieldType[];
@@ -163,3 +115,12 @@ export type FieldType = {
 export type FormType = {
   form: FieldType[];
 };
+
+type InputType =
+  | "input-text"
+  | "input-submit"
+  | "input-number"
+  | "input-date"
+  | "input-email"
+  | "input-checkbox"
+  | "input-password";

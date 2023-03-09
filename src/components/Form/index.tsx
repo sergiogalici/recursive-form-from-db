@@ -31,7 +31,7 @@ const mapper = (item: FieldType): React.ReactNode => {
     case "subForm":
       return item.subforms?.map(({ form }, i) => {
         return (
-          <div key={Date.now() * Math.random()}>
+          <div key={"es: father-children-1"}>
             <p>{item.id + " " + (i + 1)}</p>
             {form.map((item) => {
               return mapper(item);

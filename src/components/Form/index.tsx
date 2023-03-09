@@ -13,9 +13,21 @@ type FormPropsType = {
 const mapper = (item: FieldType): React.ReactNode => {
   switch (item.type) {
     case "input":
-      return <Input key={item.id} id={item.id} />;
+      return (
+        <Input
+          key={Date.now() * Math.random()}
+          isInputTypeNumber={item.isInputTypeNumber}
+          id={item.id}
+        />
+      );
     case "select":
-      return <Select key={item.id} id={item.id} dataChildren={item.children} />;
+      return (
+        <Select
+          key={Date.now() * Math.random()}
+          id={item.id}
+          dataChildren={item.children}
+        />
+      );
     case "subForm":
       return item.subform?.map(({ form }) => {
         return (

@@ -63,7 +63,35 @@ export const simpleForm: FormType = {
       type: "subForm",
       id: "children",
       subform: [
-        { subFormName: "children", form: [{ type: "input", id: "childName" }] },
+        {
+          subFormName: "child",
+          form: [
+            { type: "input", id: "children.0.childName" },
+            { type: "input", id: "children.0.age", isInputTypeNumber: true },
+          ],
+        },
+        {
+          subFormName: "child",
+          form: [
+            { type: "input", id: "children.1.childName" },
+            {
+              type: "input",
+              id: "children.1.childAge",
+              isInputTypeNumber: true,
+            },
+          ],
+        },
+        {
+          subFormName: "child",
+          form: [
+            { type: "input", id: "children.2.childName" },
+            {
+              type: "input",
+              id: "children.2.childAge",
+              isInputTypeNumber: true,
+            },
+          ],
+        },
       ],
     },
   ],
@@ -74,6 +102,7 @@ export type SimpleFormType = FormType & typeof simpleForm;
 export type FieldType = {
   type: "input" | "select" | "checkbox" | "option" | "subForm";
   id: string;
+  isInputTypeNumber?: boolean;
   children?: FieldType[];
   subform?: SubFormType[];
 };

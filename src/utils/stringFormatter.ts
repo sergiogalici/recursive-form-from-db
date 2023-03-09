@@ -1,6 +1,6 @@
 export const stringFormatter = (string: string): string => {
   if (string.includes(".")) {
-    const lastField = string.split(".").pop() ?? "";
+    const lastField = stringFormatter(string.split(".").pop() ?? "");
     return lastField
       .split(" ")[0]
       .concat(

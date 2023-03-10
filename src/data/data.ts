@@ -85,12 +85,14 @@ export const formConfig: FieldType[] = [
   {
     type: "subForm",
     id: "children",
-    children: [childField],
+    multiple: true,
+    children: childField,
   },
   {
     type: "subForm",
     id: "pets",
-    children: [petField],
+    multiple: true,
+    children: petField,
   },
 ];
 
@@ -99,7 +101,8 @@ export type FormConfigType = FieldType[];
 export type FieldType = {
   type: InputType | "select" | "checkbox" | "option" | "subForm";
   id: string;
-  children?: FieldType[] | FieldType[][];
+  children?: FieldType[]
+  multiple?: boolean;
 };
 
 type InputType =

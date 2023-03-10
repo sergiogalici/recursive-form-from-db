@@ -1,17 +1,16 @@
-import { FieldType, FormConfigType } from "../data/data";
-
-export const formConfigMapper = (
-  form: FieldType[],
-  parent: string = "",
+import { MappedFieldType } from "../components/Form/model";
+export const formMapper = (
+  form: MappedFieldType[],
+  parent = "",
   index: number = 0
-): FieldType[] => {
+) => {
   return form.map((field) => {
     const newId = parent ? `${parent}.${index}.${field.id}` : "";
 
-    if (field.type === "subForm" && field.children) {
-      let childrenToMap = field.children as FormConfigType[];
+    if (field.type === "subForm" && field.children && field.multiple) {
+      let childrenToMap = field.children as MappedFieldType[][];
       childrenToMap = childrenToMap.map((child, i) => {
-        return formConfigMapper(child, field.id, i);
+        return formMapper(child, field.id, i);
       });
       return { ...field, children: childrenToMap };
     }

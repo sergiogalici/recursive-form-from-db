@@ -1,11 +1,11 @@
 import React from "react";
-import { FieldType } from "../../../data/data";
 import { useFormContext } from "react-hook-form";
 import { stringFormatter } from "../../../utils/stringFormatter";
+import { MappedFieldType } from "../model";
 
 type SelectPropsType = {
   id: string;
-  options: FieldType[];
+  options: MappedFieldType[];
 };
 
 export const Select = ({ id, options }: SelectPropsType) => {

@@ -1,7 +1,8 @@
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { FormConfigType } from "../../data/data";
-import { formConfigMapper } from "../../utils/getItemDepth";
+import { formConfigPreMapper } from "../../utils/formConfigPreMapper";
+import { formMapper } from "../../utils/formMapper";
 import { formFactory } from "./formFactory";
 
 const onSubmit = (data: any) => console.log(data);
@@ -11,7 +12,8 @@ type FormPropsType = {
 };
 
 const mapper = (form: FormConfigType): React.ReactNode => {
-  const mappedForm = formConfigMapper(form);
+  const preMappedForm = formConfigPreMapper(form);
+  const mappedForm = formMapper(preMappedForm);
   console.log(mappedForm);
   return mappedForm.map((item) => {
     return formFactory(item);

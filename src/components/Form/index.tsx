@@ -1,9 +1,8 @@
 import React from "react";
-import { useFormContext, useForm, FormProvider } from "react-hook-form";
-import { FieldType, FormConfigType } from "../../data/data";
+import { useForm, FormProvider } from "react-hook-form";
+import { FormConfigType } from "../../data/data";
 import { formConfigMapper } from "../../utils/getItemDepth";
-import { Input } from "./fields/Input";
-import Select from "./fields/Select";
+import { formFactory } from "./formFactory";
 
 const onSubmit = (data: any) => console.log(data);
 
@@ -12,8 +11,11 @@ type FormPropsType = {
 };
 
 const mapper = (form: FormConfigType): React.ReactNode => {
-  console.log(formConfigMapper(form));
-  return <p>aaa</p>;
+  const mappedForm = formConfigMapper(form);
+  console.log(mappedForm);
+  return mappedForm.map((item) => {
+    return formFactory(item);
+  });
 };
 
 export const Form = ({ formConfig }: FormPropsType) => {

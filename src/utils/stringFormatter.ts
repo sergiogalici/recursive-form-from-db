@@ -16,3 +16,7 @@ export const stringFormatter = (string: string): string => {
     return acc;
   }, "");
 };
+
+export const inputTypePicker = (input: string): string => {
+  return input.split("-")[1];
+};

@@ -1,17 +1,19 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { stringFormatter } from "../../../utils/stringFormatter";
+import {
+  inputTypePicker,
+  stringFormatter,
+} from "../../../utils/stringFormatter";
 
 type InputProps = {
   id: string;
-  isInputTypeNumber?: boolean;
 };
 
-export const Input = ({ id, isInputTypeNumber }: InputProps) => {
+export const Input = ({ id }: InputProps) => {
   const { register } = useFormContext();
   return (
     <input
-      type={isInputTypeNumber ? "number" : "text"}
+      type={inputTypePicker(id)}
       placeholder={`Please inser your ${stringFormatter(id)}`}
       {...register(id)}
     />

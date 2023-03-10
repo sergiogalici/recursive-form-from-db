@@ -1,6 +1,3 @@
-import { Schema, SchemaFieldDescription } from "yup";
-import * as yup from "yup";
-
 const cuisines: FieldType[] = [
   {
     type: "option",
@@ -93,7 +90,7 @@ export const formConfig: FieldType[] = [
   {
     type: "subForm",
     id: "pets",
-    children: [petField, petField],
+    children: [petField],
   },
 ];
 

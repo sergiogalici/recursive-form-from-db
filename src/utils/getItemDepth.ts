@@ -17,7 +17,6 @@ export const formConfigMapper = (
     }
 
     if (newId !== "") {
-      console.log("NEW ID = ", newId);
       return { ...field, id: newId };
     }
 

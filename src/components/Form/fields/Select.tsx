@@ -5,17 +5,17 @@ import { stringFormatter } from "../../../utils/stringFormatter";
 
 type SelectPropsType = {
   id: string;
-  dataChildren?: FieldType[];
+  options: FieldType[];
 };
 
-export const Select = ({ id, dataChildren }: SelectPropsType) => {
+export const Select = ({ id, options }: SelectPropsType) => {
   const { register } = useFormContext();
   return (
     <>
       <label htmlFor={id}>{stringFormatter(id)}</label>
       <select {...register(id)}>
-        {dataChildren &&
-          dataChildren.map((child) => {
+        {options &&
+          options.map((child) => {
             return (
               <option key={child.id} value={child.id}>
                 {stringFormatter(child.id)}

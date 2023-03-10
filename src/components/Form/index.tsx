@@ -14,7 +14,6 @@ type FormPropsType = {
 const mapper = (form: FormConfigType): React.ReactNode => {
   const preMappedForm = formConfigPreMapper(form);
   const mappedForm = formMapper(preMappedForm);
-  console.log(mappedForm);
   return mappedForm.map((item) => {
     return formFactory(item);
   });

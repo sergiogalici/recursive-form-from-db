@@ -7,9 +7,7 @@ export const formConfigPreMapper = (
   return form.map((field) => {
     if (field.multiple) {
       return {
-        type: field.type,
-        id: field.id,
-        multiple: field.multiple,
+        ...field,
         children: [field.children],
       } as MappedFieldType;
     }

@@ -1,24 +1,18 @@
 import { PayloadAction, createAction, createSlice } from "@reduxjs/toolkit";
+import { MappedFieldType } from "../../components/Form/model";
 import { FormData } from "./../../data/oldSchema";
 import { FormsState } from "./model";
 
 const initialState: FormsState = {
-  forms: [
-    {
-      email: "",
-      firstName: "",
-      lastName: "",
-      addresses: [{ address: "", city: "", houseNumber: 1, state: "" }],
-    },
-  ],
+  forms: null,
 };
 
 const formsSlice = createSlice({
   name: "forms",
   initialState,
   reducers: {
-    updateForm: (state, { payload }: PayloadAction<FormData>) => {
-      state.forms = [...state.forms, payload];
+    updateForm: (state, { payload }: PayloadAction<MappedFieldType[]>) => {
+      state.forms = payload;
     },
   },
 });

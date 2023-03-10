@@ -1,5 +1,5 @@
-import { FormData } from "./../../data/oldSchema";
+import { MappedFieldType } from "../../components/Form/model";
 
 export type FormsState = {
-  forms: FormData[];
+  forms: MappedFieldType[] | null;
 };

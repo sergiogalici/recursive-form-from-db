@@ -4,12 +4,12 @@ import { FormProvider } from "react-hook-form/dist/useFormContext";
 import { Form } from "./components/Form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { simpleForm } from "./data/data";
+import { formConfig } from "./data/data";
 
 const App = () => {
   // Generate formData dynamically from formConfig and from user choices ?? initialFormData
 
-  return <Form formData={simpleForm} />;
+  return <Form formConfig={formConfig} />;
 
   // FN LN FC EL
 };

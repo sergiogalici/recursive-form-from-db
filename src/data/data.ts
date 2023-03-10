@@ -43,13 +43,36 @@ const edLevels: FieldType[] = [
   },
 ];
 
+export const childField: FieldType[] = [
+  { type: "input-text", id: "name" },
+  {
+    type: "input-number",
+    id: "age",
+  },
+  {
+    type: "select",
+    id: "educationLevel",
+    children: edLevels,
+  },
+  {
+    type: "select",
+    id: "favouriteCuisine",
+    children: cuisines,
+  },
+];
+
+export const petField: FieldType[] = [
+  { type: "input-text", id: "petName" },
+  { type: "input-number", id: "petAge" },
+];
+
 export const formConfig: FieldType[] = [
   {
     type: "input-text",
     id: "firstName",
   },
   {
-    type: "input",
+    type: "input-text",
     id: "lastName",
   },
   {
@@ -65,55 +88,21 @@ export const formConfig: FieldType[] = [
   {
     type: "subForm",
     id: "children",
-    multiple: true,
-    children: [
-      { type: "input", id: "name" },
-      {
-        type: "input",
-        id: "age",
-        isInputTypeNumber: true,
-      },
-      {
-        type: "select",
-        id: "educationLevel",
-        children: edLevels,
-      },
-      {
-        type: "select",
-        id: "favouriteCuisine",
-        children: cuisines,
-      },
-    ],
+    children: [childField],
   },
   {
     type: "subForm",
     id: "pets",
-    children: [
-      { type: "input", id: "petName" },
-      { type: "input-number", id: "petAge" },
-    ],
+    children: [petField, petField],
   },
 ];
 
-/**
- * 2 children
- * 3 pets
- *
- *
- */
-
-export type FormConfigType = FormType & typeof formConfig;
+export type FormConfigType = FieldType[];
 
 export type FieldType = {
   type: InputType | "select" | "checkbox" | "option" | "subForm";
   id: string;
-  isInputTypeNumber?: boolean;
-  children?: FieldType[];
-  subforms?: FormType[];
-};
-
-export type FormType = {
-  form: FieldType[];
+  children?: FieldType[] | FieldType[][];
 };
 
 type InputType =

@@ -1,55 +1,27 @@
 import React from "react";
 import { useFormContext, useForm, FormProvider } from "react-hook-form";
-import { FieldType, FormType, SimpleFormType } from "../../data/data";
+import { FieldType, FormConfigType } from "../../data/data";
+import { formConfigMapper } from "../../utils/getItemDepth";
 import { Input } from "./fields/Input";
 import Select from "./fields/Select";
 
 const onSubmit = (data: any) => console.log(data);
 
 type FormPropsType = {
-  formData: FormType;
+  formConfig: FormConfigType;
 };
 
-const mapper = (item: FieldType): React.ReactNode => {
-  switch (item.type) {
-    case "input":
-      return (
-        <Input
-          key={Date.now() * Math.random()}
-          isInputTypeNumber={item.isInputTypeNumber}
-          id={item.id}
-        />
-      );
-    case "select":
-      return (
-        <Select
-          key={Date.now() * Math.random()}
-          id={item.id}
-          dataChildren={item.children}
-        />
-      );
-    case "subForm":
-      return item.subforms?.map(({ form }, i) => {
-        return (
-          <div key={"es: father-children-1"}>
-            <p>{item.id + " " + (i + 1)}</p>
-            {form.map((item) => {
-              return mapper(item);
-            })}
-          </div>
-        );
-      });
-  }
+const mapper = (form: FormConfigType): React.ReactNode => {
+  console.log(formConfigMapper(form));
+  return <p>aaa</p>;
 };
 
-export const Form = ({ formData }: FormPropsType) => {
-  const methods = useForm<SimpleFormType>();
+export const Form = ({ formConfig }: FormPropsType) => {
+  const methods = useForm<FormConfigType>();
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        {formData.form.map((item) => {
-          return mapper(item);
-        })}
+        {mapper(formConfig)}
         <input type="submit" />
       </form>
     </FormProvider>

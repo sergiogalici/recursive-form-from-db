@@ -9,16 +9,27 @@ export const formMapper = (
 
     if (field.type === "subForm" && field.children && field.multiple) {
       let childrenToMap = field.children as MappedFieldType[][];
+
       childrenToMap = childrenToMap.map((child, i) => {
         return formMapper(child, field.id, i);
       });
-      return { ...field, children: childrenToMap };
+
+      return { ...field, children: childrenToMap, key: field.id };
+    }
+
+    if (field.type === "select" && newId !== "") {
+      const childrenToMap = field.children as MappedFieldType[];
+      childrenToMap.map((child) => {
+        return { ...child, key: `${newId + "." + field.id}` };
+      });
+
+      return { ...field, key: newId };
     }
 
     if (newId !== "") {
-      return { ...field, id: newId };
+      return { ...field, id: newId, key: newId };
     }
 
-    return field;
+    return { ...field, key: `main.${field.id}` };
   });
 };

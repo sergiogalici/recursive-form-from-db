@@ -22,7 +22,7 @@ export const formFactory = (field: MappedFieldType): React.ReactNode => {
     return field.children.map((child, i) => {
       const childToMap = child as MappedFieldType[];
       return (
-        <div key={field.type}>
+        <div key={field.type + field.key + i}>
           <p>{field.id + "#" + (i + 1)}</p>
           {childToMap.map((form) => {
             return formFactory(form);

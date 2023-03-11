@@ -1,18 +1,12 @@
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { FormConfigType } from "../../data/data";
-import { formsActions } from "../../features/forms/reducers";
-import { formConfigPreMapper } from "../../utils/formConfigPreMapper";
-import { formMapper } from "../../utils/formMapper";
+import { selectAllForms } from "../../features/forms/selector";
 import { formFactory } from "./formFactory";
 import { MappedFieldType } from "./model";
 
 const onSubmit = (data: any) => console.log(data);
-
-type FormPropsType = {
-  formConfig: FormConfigType;
-};
 
 const mapper = (mappedForm: MappedFieldType[]): React.ReactNode => {
   return mappedForm.map((item) => {
@@ -20,16 +14,15 @@ const mapper = (mappedForm: MappedFieldType[]): React.ReactNode => {
   });
 };
 
-export const Form = ({ formConfig }: FormPropsType) => {
+export const Form = () => {
   const methods = useForm<FormConfigType>();
-  const preMappedForm = formConfigPreMapper(formConfig);
-  const mappedForm = formMapper(preMappedForm);
-  const dispatch = useDispatch();
-  dispatch(formsActions.updateForm(mappedForm));
+
+  const currentForm = useSelector(selectAllForms);
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        {mapper(mappedForm)}
+        {mapper(currentForm!)}
         <input type="submit" />
       </form>
     </FormProvider>

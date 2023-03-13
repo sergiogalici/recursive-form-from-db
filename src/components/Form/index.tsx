@@ -3,21 +3,19 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { FormConfigType } from "../../data/data";
 import { selectAllForms } from "../../features/forms/selector";
-import { formFactory } from "./formFactory";
+import { FormFactory } from "./formFactory";
 import { MappedFieldType } from "./model";
 
 const onSubmit = (data: any) => console.log(data);
 
 const mapper = (mappedForm: MappedFieldType[]): React.ReactNode => {
   return mappedForm.map((item) => {
-    return formFactory(item);
+    return <FormFactory key={item.id} field={item} />;
   });
 };
 
 export const Form = () => {
   const methods = useForm<FormConfigType>();
-
-  const dispatch = useDispatch();
 
   const currentForm = useSelector(selectAllForms);
 

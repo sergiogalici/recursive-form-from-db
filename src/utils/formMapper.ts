@@ -18,23 +18,22 @@ export const formMapper = (
         ...field,
         children: childrenToMap,
         id: parent === "" ? field.id : `${parent}.${index}.${field.id}`,
-        key: parent === "" ? field.id : `${parent}.${index}.${field.id}`,
       };
     }
 
     if (field.type === "select" && newId !== "") {
       const childrenToMap = field.children as MappedFieldType[];
       childrenToMap.map((child) => {
-        return { ...child, key: `${newId + "." + field.id}` };
+        return { ...child };
       });
 
-      return { ...field, key: newId, id: newId };
+      return { ...field, id: newId };
     }
 
     if (newId !== "") {
-      return { ...field, id: newId, key: newId };
+      return { ...field, id: newId };
     }
 
-    return { ...field, key: `main.${field.id}` };
+    return { ...field };
   });
 };

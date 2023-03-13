@@ -9,6 +9,7 @@ export const formConfigPreMapper = (form: FieldType[]): MappedFieldType[] => {
         (child) => child.type === "subForm"
       );
       if (isSubFormInChildren) {
+        // remove repetitions
         return {
           ...field,
           children: [formConfigPreMapper(childrenToMap)],

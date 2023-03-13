@@ -25,3 +25,15 @@ export const getLastFieldElement = (fieldId: string | undefined): string => {
   if (fieldId === undefined) return "";
   return fieldId.split(".").length > 1 ? fieldId.split(".").pop()! : fieldId;
 };
+
+export const subFormIdMapper = (fieldId: string | undefined): string => {
+  if (fieldId === undefined) return "";
+  return fieldId.split(".").length > 1
+    ? fieldId
+        .split(".")
+        .map((field) =>
+          !isNaN(Number(Number(field))) ? (Number(field) + 1).toString() : field
+        )
+        .join(" ")
+    : fieldId;
+};

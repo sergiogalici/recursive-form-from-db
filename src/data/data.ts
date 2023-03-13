@@ -40,6 +40,11 @@ const edLevels: FieldType[] = [
   },
 ];
 
+export const petField: FieldType[] = [
+  { type: "input-text", id: "petName" },
+  { type: "input-number", id: "petAge" },
+];
+
 export const childField: FieldType[] = [
   { type: "input-text", id: "name" },
   {
@@ -56,12 +61,7 @@ export const childField: FieldType[] = [
     id: "favouriteCuisine",
     children: cuisines,
   },
-];
-
-export const petField: FieldType[] = [
-  { type: "input-text", id: "petName" },
-  { type: "input-number", id: "petAge" },
-  //{ type: "subForm", id: "petChildren", children: childField },
+  { type: "subForm", id: "childPets", children: petField, multiple: true },
 ];
 
 export const formConfig: FieldType[] = [
@@ -114,3 +114,15 @@ type InputType =
   | "input-email"
   | "input-checkbox"
   | "input-password";
+
+export const mappedSubFields: MappedSubFieldsType = {
+  pets: petField,
+  children: childField,
+  childPets: petField,
+};
+
+export type MappedSubFieldsType = {
+  pets: FieldType[];
+  children: FieldType[];
+  childPets: FieldType[];
+};

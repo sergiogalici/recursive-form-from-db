@@ -1,26 +1,46 @@
 import { MappedFieldType } from "../components/Form/model";
-import { childField, FieldType, petField } from "../data/data";
+import {
+  childField,
+  FieldType,
+  mappedSubFields,
+  MappedSubFieldsType,
+  petField,
+} from "../data/data";
 import { formConfigPreMapper } from "./formConfigPreMapper";
 import { formMapper } from "./formMapper";
 
-export const addField = (field: MappedFieldType) => {
-  let fieldToAdd: FieldType[];
+export const addField = (
+  field: MappedFieldType,
+  payload: string,
+  mappedPayload: string
+) => {
+  if (field.multiple && field.id === payload) {
+    let fieldToAdd: FieldType[] =
+      mappedSubFields[mappedPayload as keyof MappedSubFieldsType];
 
-  if (field.id === "children") {
-    fieldToAdd = childField;
+    const childrenToMap = field.children as MappedFieldType[][];
+    const preMapped = formConfigPreMapper(fieldToAdd!);
+    const mapped = formMapper(preMapped, field.id, childrenToMap.length);
+
+    childrenToMap.push(mapped);
+
+    field.children = childrenToMap;
+    return field;
   }
 
-  if (field.id === "pets") {
-    fieldToAdd = petField;
+  if (field.multiple && field.id !== payload) {
+    const childrenToMap = field.children as MappedFieldType[][];
+    childrenToMap.map((child) => {
+      return child.map((field) => {
+        return addField(field, payload, mappedPayload);
+      });
+    });
+
+    return {
+      ...field,
+      children: childrenToMap,
+    };
   }
-
-  const childrenToMap = field.children as MappedFieldType[][];
-  const preMapped = formConfigPreMapper(fieldToAdd!);
-  const mapped = formMapper(preMapped, field.id, childrenToMap.length);
-
-  childrenToMap.push(mapped);
-
-  field.children = childrenToMap;
   return field;
 };
 

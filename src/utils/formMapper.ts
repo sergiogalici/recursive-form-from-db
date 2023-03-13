@@ -11,10 +11,15 @@ export const formMapper = (
       let childrenToMap = field.children as MappedFieldType[][];
 
       childrenToMap = childrenToMap.map((child, i) => {
-        return formMapper(child, field.id, i);
+        return formMapper(child, newId !== "" ? newId : field.id, i);
       });
 
-      return { ...field, children: childrenToMap, key: field.id };
+      return {
+        ...field,
+        children: childrenToMap,
+        id: parent === "" ? field.id : `${parent}.${index}.${field.id}`,
+        key: parent === "" ? field.id : `${parent}.${index}.${field.id}`,
+      };
     }
 
     if (field.type === "select" && newId !== "") {

@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FormConfigType } from "../../data/data";
 import { selectAllForms } from "../../features/forms/selector";
 import { formFactory } from "./formFactory";
@@ -16,6 +16,8 @@ const mapper = (mappedForm: MappedFieldType[]): React.ReactNode => {
 
 export const Form = () => {
   const methods = useForm<FormConfigType>();
+
+  const dispatch = useDispatch();
 
   const currentForm = useSelector(selectAllForms);
 

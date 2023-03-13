@@ -20,3 +20,8 @@ export const stringFormatter = (string: string): string => {
 export const inputTypePicker = (input: string): string => {
   return input.split("-")[1];
 };
+
+export const getLastFieldElement = (fieldId: string | undefined): string => {
+  if (fieldId === undefined) return "";
+  return fieldId.split(".").length > 1 ? fieldId.split(".").pop()! : fieldId;
+};

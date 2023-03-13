@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { MappedFieldType } from "../../components/Form/model";
 import { addField, removeField } from "../../utils/fieldsAddRemoveHandler";
+import { getLastFieldElement } from "../../utils/stringFormatter";
 import { FormsState } from "./model";
 
 const initialState: FormsState = {
@@ -17,11 +18,7 @@ const formsSlice = createSlice({
     addFieldToSubform: (state, { payload }: PayloadAction<string>) => {
       state.forms = state.forms
         ? state.forms.map((field) => {
-            if (field.multiple && field.id === payload) {
-              field = addField(field);
-            }
-
-            return field;
+            return addField(field, payload, getLastFieldElement(payload));
           })
         : null;
     },

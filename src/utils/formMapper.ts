@@ -23,7 +23,7 @@ export const formMapper = (
         return { ...child, key: `${newId + "." + field.id}` };
       });
 
-      return { ...field, key: newId };
+      return { ...field, key: newId, id: newId };
     }
 
     if (newId !== "") {

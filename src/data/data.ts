@@ -101,7 +101,7 @@ export type FormConfigType = FieldType[];
 export type FieldType = {
   type: InputType | "select" | "checkbox" | "option" | "subForm";
   id: string;
-  children?: FieldType[]
+  children?: FieldType[];
   multiple?: boolean;
 };
 

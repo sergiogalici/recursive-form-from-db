@@ -5,7 +5,7 @@ import { MappedFieldType } from "./model";
 
 export const formFactory = (field: MappedFieldType): React.ReactNode => {
   if (field.type.startsWith("input")) {
-    return <Input id={field.id} key={field.id + field.type} />;
+    return <Input id={field.id} key={field.key} type={field.type} />;
   }
 
   if (field.type === "select") {
@@ -13,7 +13,7 @@ export const formFactory = (field: MappedFieldType): React.ReactNode => {
       <Select
         options={field.children as MappedFieldType[]}
         id={field.id}
-        key={field.id + field.type}
+        key={field.key}
       />
     );
   }
@@ -22,7 +22,7 @@ export const formFactory = (field: MappedFieldType): React.ReactNode => {
     return field.children.map((child, i) => {
       const childToMap = child as MappedFieldType[];
       return (
-        <div key={field.type + field.key + i}>
+        <div key={field.key + `.${i}`}>
           <p>{field.id + "#" + (i + 1)}</p>
           {childToMap.map((form) => {
             return formFactory(form);

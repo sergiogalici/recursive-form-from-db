@@ -1,8 +1,6 @@
 import React from "react";
 import { Form } from "./components/Form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { childField, formConfig } from "./data/data";
+import { formConfig } from "./data/data";
 import { formConfigPreMapper } from "./utils/formConfigPreMapper";
 import { formMapper } from "./utils/formMapper";
 import { useDispatch } from "react-redux";
@@ -20,9 +18,24 @@ const App = () => {
     <div>
       <Form />
       <button
-        onClick={() => dispatch(formsActions.addFieldToSubform(childField))}
+        onClick={() => dispatch(formsActions.addFieldToSubform("children"))}
       >
         Add a Child
+      </button>
+      <button onClick={() => dispatch(formsActions.addFieldToSubform("pets"))}>
+        Add a Pet
+      </button>
+      <button
+        onClick={() =>
+          dispatch(formsActions.removeFieldFromSubform("children"))
+        }
+      >
+        Remove a Child
+      </button>
+      <button
+        onClick={() => dispatch(formsActions.removeFieldFromSubform("pets"))}
+      >
+        Remove a Pet
       </button>
     </div>
   );

@@ -61,6 +61,7 @@ export const childField: FieldType[] = [
 export const petField: FieldType[] = [
   { type: "input-text", id: "petName" },
   { type: "input-number", id: "petAge" },
+  //{ type: "subForm", id: "petChildren", children: childField },
 ];
 
 export const formConfig: FieldType[] = [

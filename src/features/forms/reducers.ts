@@ -29,7 +29,7 @@ const formsSlice = createSlice({
       state.forms = state.forms
         ? state.forms.map((field) => {
             if (field.multiple && field.id === payload) {
-              removeField(field);
+              field = removeField(field);
             }
             return field;
           })

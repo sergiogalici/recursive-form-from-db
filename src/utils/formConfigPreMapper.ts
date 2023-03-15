@@ -1,25 +1,27 @@
 import { MappedFieldType } from "../components/Form/model";
-import { FieldType, FormConfigType } from "../data/data";
+import { FieldType } from "../data/data";
 
 export const formConfigPreMapper = (form: FieldType[]): MappedFieldType[] => {
   return form.map((field) => {
-    if (field.multiple) {
+    if (field.multiple && field.children) {
       const childrenToMap = field.children as FieldType[];
-      const isSubFormInChildren = field.children?.map(
+      const anySubFormsInChildren = field.children.some(
         (child) => child.type === "subForm"
       );
-      if (isSubFormInChildren) {
-        // remove repetitions
+
+      if (anySubFormsInChildren) {
         return {
           ...field,
           children: [formConfigPreMapper(childrenToMap)],
         } as MappedFieldType;
       }
+
       return {
         ...field,
         children: [field.children],
       } as MappedFieldType;
     }
+
     return field as MappedFieldType;
   });
 };

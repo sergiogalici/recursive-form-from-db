@@ -21,15 +21,6 @@ export const formMapper = (
       };
     }
 
-    if (field.type === "select" && newId !== "") {
-      const childrenToMap = field.children as MappedFieldType[];
-      childrenToMap.map((child) => {
-        return { ...child };
-      });
-
-      return { ...field, id: newId };
-    }
-
     if (newId !== "") {
       return { ...field, id: newId };
     }

@@ -25,6 +25,6 @@ export const formMapper = (
       return { ...field, id: newId };
     }
 
-    return { ...field };
+    return field;
   });
 };

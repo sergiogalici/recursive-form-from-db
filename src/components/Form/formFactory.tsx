@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { formsActions } from "../../features/forms/reducers";
 import {
   getLastFieldElement,
+  stringFormatter,
   subFormIdMapper,
 } from "../../utils/stringFormatter";
 import { Input } from "./fields/Input";
@@ -11,14 +12,6 @@ import { MappedFieldType } from "./model";
 
 type FormFactoryPropsType = {
   field: MappedFieldType;
-};
-
-const addPetToChild = (childToMap: MappedFieldType[]) => {
-  return formsActions.addFieldToSubform(
-    childToMap.find(
-      (subChild) => getLastFieldElement(subChild.id) === "childPets"
-    )?.id ?? ""
-  );
 };
 
 // add a memo in each single Field Element
@@ -52,10 +45,18 @@ export const FormFactory = ({ field }: FormFactoryPropsType) => {
               {childToMap.map((form) => {
                 return <FormFactory field={form} key={form.id} />;
               })}
-              {getLastFieldElement(field.id) === "children" && (
-                <button onClick={() => dispatch(addPetToChild(childToMap))}>
-                  Add a pet to child
-                </button>
+              {childToMap.map((child) =>
+                child.type === "subForm" ? (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      dispatch(formsActions.addFieldToSubform(child.id))
+                    }
+                    key={"button." + child.id}
+                  >
+                    Add a {stringFormatter(child.id)}
+                  </button>
+                ) : null
               )}
             </div>
           );

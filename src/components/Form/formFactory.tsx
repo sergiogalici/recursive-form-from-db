@@ -55,7 +55,6 @@ export const FormFactory = ({ field }: FormFactoryPropsType) => {
                             dispatch(
                               formsActions.removeFieldFromSubform(form.id)
                             );
-                            console.log("form ID = ", form.id);
                           }}
                         >
                           Remove {stringFormatter(form.id)}

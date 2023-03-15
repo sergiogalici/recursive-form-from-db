@@ -45,6 +45,11 @@ export const petField: FieldType[] = [
   { type: "input-number", id: "petAge" },
 ];
 
+export const favouriteToysField: FieldType[] = [
+  { type: "input-text", id: "toyManufacturer" },
+  { type: "input-number", id: "toyPrice" },
+];
+
 export const childField: FieldType[] = [
   { type: "input-text", id: "name" },
   {
@@ -62,6 +67,12 @@ export const childField: FieldType[] = [
     children: cuisines,
   },
   { type: "subForm", id: "childPets", children: petField, multiple: true },
+  {
+    type: "subForm",
+    id: "childFavouriteToys",
+    children: favouriteToysField,
+    multiple: true,
+  },
 ];
 
 export const formConfig: FieldType[] = [
@@ -119,10 +130,12 @@ export const mappedSubFields: MappedSubFieldsType = {
   pets: petField,
   children: childField,
   childPets: petField,
+  childFavouriteToys: favouriteToysField,
 };
 
 export type MappedSubFieldsType = {
   pets: FieldType[];
   children: FieldType[];
   childPets: FieldType[];
+  childFavouriteToys: FieldType[];
 };

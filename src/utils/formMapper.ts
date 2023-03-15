@@ -7,7 +7,7 @@ export const formMapper = (
   return form.map((field) => {
     const newId = parent ? `${parent}.${index}.${field.id}` : "";
 
-    if (field.type === "subForm" && field.children && field.multiple) {
+    if (field.children && field.multiple) {
       let childrenToMap = field.children as MappedFieldType[][];
 
       childrenToMap = childrenToMap.map((child, i) => {

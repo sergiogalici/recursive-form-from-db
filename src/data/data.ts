@@ -1,3 +1,5 @@
+import { Field } from "react-hook-form";
+
 const cuisines: FieldType[] = [
   {
     type: "option",
@@ -75,6 +77,43 @@ export const childField: FieldType[] = [
   },
 ];
 
+const ratingsField: FieldType[] = [
+  {
+    type: "input-number",
+    id: "buyerRating",
+  },
+];
+
+const productBuyerField: FieldType[] = [
+  {
+    type: "input-text",
+    id: "buyerName",
+  },
+  {
+    type: "input-number",
+    id: "productQuantity",
+  },
+  {
+    type: "subForm",
+    id: "buyerRatings",
+    multiple: true,
+    children: ratingsField,
+  },
+];
+
+const productField: FieldType[] = [
+  {
+    type: "input-text",
+    id: "productName",
+  },
+  {
+    type: "subForm",
+    id: "productBuyers",
+    multiple: true,
+    children: productBuyerField,
+  },
+];
+
 export const formConfig: FieldType[] = [
   {
     type: "input-text",
@@ -106,6 +145,12 @@ export const formConfig: FieldType[] = [
     multiple: true,
     children: petField,
   },
+  {
+    type: "subForm",
+    id: "products",
+    multiple: true,
+    children: productField,
+  },
 ];
 
 export type FormConfigType = FieldType[];
@@ -131,6 +176,9 @@ export const mappedSubFields: MappedSubFieldsType = {
   children: childField,
   childPets: petField,
   childFavouriteToys: favouriteToysField,
+  products: productField,
+  productBuyers: productBuyerField,
+  buyerRatings: ratingsField,
 };
 
 export type MappedSubFieldsType = {
@@ -138,4 +186,7 @@ export type MappedSubFieldsType = {
   children: FieldType[];
   childPets: FieldType[];
   childFavouriteToys: FieldType[];
+  products: FieldType[];
+  productBuyers: FieldType[];
+  buyerRatings: FieldType[];
 };

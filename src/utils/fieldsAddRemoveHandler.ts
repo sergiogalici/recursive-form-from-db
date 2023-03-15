@@ -44,12 +44,19 @@ export const addField = (
   return field;
 };
 
-export const removeField = (field: MappedFieldType) => {
-  const childrenToMap = field.children as MappedFieldType[][];
+export const removeField = (form: MappedFieldType[], id: string) => {
+  return form.filter((field) => {
+    if (field.id === id) {
+      return false;
+    }
 
-  childrenToMap.pop();
+    if (field.id !== id && field.multiple) {
+      const childrenToFilter = field.children as MappedFieldType[][];
+      field.children = childrenToFilter.filter((child) => {
+        return removeField(child, id);
+      });
+    }
 
-  field.children = childrenToMap;
-
-  return field;
+    return true;
+  });
 };

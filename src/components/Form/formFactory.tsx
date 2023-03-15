@@ -23,20 +23,14 @@ export const FormFactory = ({ field }: FormFactoryPropsType) => {
     return <Input type={field.type} id={field.id} key={field.id} />;
   }
 
-  if (field.type === "select") {
-    return (
-      <Select
-        options={field.children as MappedFieldType[]}
-        id={field.id}
-        key={field.id}
-      />
-    );
+  if (field.type === "select" && !field.multiple) {
+    return <Select options={field.children} id={field.id} key={field.id} />;
   }
 
-  if (field.type === "subForm" && field.children) {
+  if (field.type === "subForm" && field.multiple) {
     // extract to SubForm component
     return (
-      <React.Fragment key={field.type + field.id}>
+      <React.Fragment key={field.id}>
         {field.children.map((child, i) => {
           const childToMap = child as MappedFieldType[];
           return (
@@ -45,17 +39,18 @@ export const FormFactory = ({ field }: FormFactoryPropsType) => {
               {childToMap.map((form) => {
                 return <FormFactory field={form} key={form.id} />;
               })}
-              {childToMap.map((child) =>
+              {childToMap.map((child, i) =>
                 child.type === "subForm" ? (
-                  <button
-                    type="button"
-                    onClick={() =>
-                      dispatch(formsActions.addFieldToSubform(child.id))
-                    }
-                    key={"button." + child.id}
-                  >
-                    Add a {stringFormatter(child.id)}
-                  </button>
+                  <div key={child.id + i}>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        dispatch(formsActions.addFieldToSubform(child.id))
+                      }
+                    >
+                      Add a {stringFormatter(child.id)}
+                    </button>
+                  </div>
                 ) : null
               )}
             </div>

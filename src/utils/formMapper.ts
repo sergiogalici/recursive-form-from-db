@@ -8,7 +8,7 @@ export const formMapper = (
     const newId = parent ? `${parent}.${index}.${field.id}` : "";
 
     if (field.children && field.multiple) {
-      let childrenToMap = field.children as MappedFieldType[][];
+      let childrenToMap = field.children;
 
       childrenToMap = childrenToMap.map((child, i) => {
         return formMapper(child, newId !== "" ? newId : field.id, i);

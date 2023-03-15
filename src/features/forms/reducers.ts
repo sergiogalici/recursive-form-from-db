@@ -23,14 +23,7 @@ const formsSlice = createSlice({
         : null;
     },
     removeFieldFromSubform: (state, { payload }: PayloadAction<string>) => {
-      state.forms = state.forms
-        ? state.forms.map((field) => {
-            if (field.multiple && field.id === payload) {
-              field = removeField(field);
-            }
-            return field;
-          })
-        : null;
+      state.forms = state.forms ? removeField(state.forms, payload) : null;
     },
   },
 });

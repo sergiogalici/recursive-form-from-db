@@ -26,6 +26,11 @@ const App = () => {
         Add a Pet
       </button>
       <button
+        onClick={() => dispatch(formsActions.addFieldToSubform("products"))}
+      >
+        Add a Product
+      </button>
+      <button
         onClick={() =>
           dispatch(formsActions.removeFieldFromSubform("children"))
         }

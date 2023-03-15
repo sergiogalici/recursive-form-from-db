@@ -137,6 +137,7 @@ export const formConfig: FieldType[] = [
     type: "subForm",
     id: "children",
     multiple: true,
+    // addNewItemTitle: "aggiungi figlio",
     children: childField,
   },
   {

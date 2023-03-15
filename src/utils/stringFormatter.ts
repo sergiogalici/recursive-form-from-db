@@ -32,7 +32,9 @@ export const subFormIdMapper = (fieldId: string | undefined): string => {
     ? fieldId
         .split(".")
         .map((field) =>
-          !isNaN(Number(Number(field))) ? (Number(field) + 1).toString() : field
+          !isNaN(Number(Number(field)))
+            ? (Number(field) + 1).toString()
+            : stringFormatter(field)
         )
         .join(" ")
     : fieldId;

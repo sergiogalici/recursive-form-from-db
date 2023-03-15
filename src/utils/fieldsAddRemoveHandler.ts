@@ -1,11 +1,5 @@
 import { MappedFieldType } from "../components/Form/model";
-import {
-  childField,
-  FieldType,
-  mappedSubFields,
-  MappedSubFieldsType,
-  petField,
-} from "../data/data";
+import { FieldType, mappedSubFields, MappedSubFieldsType } from "../data/data";
 import { formConfigPreMapper } from "./formConfigPreMapper";
 import { formMapper } from "./formMapper";
 
@@ -44,19 +38,24 @@ export const addField = (
   return field;
 };
 
-export const removeField = (form: MappedFieldType[], id: string) => {
-  return form.filter((field) => {
-    if (field.id === id) {
-      return false;
-    }
+export const removeField = (
+  form: MappedFieldType[],
+  id: string
+): MappedFieldType[] => {
+  const filteredForm = form.filter((field) => field.id !== id);
 
-    if (field.id !== id && field.multiple) {
-      const childrenToFilter = field.children as MappedFieldType[][];
-      field.children = childrenToFilter.filter((child) => {
-        return removeField(child, id);
-      });
-    }
+  if (filteredForm.length === form.length) {
+    return form.map((field) => {
+      if (field.multiple && field.children) {
+        const childrenToMap = field.children.map((child) =>
+          removeField(child, id)
+        );
+        return { ...field, children: childrenToMap };
+      }
 
-    return true;
-  });
+      return field;
+    });
+  }
+
+  return filteredForm;
 };

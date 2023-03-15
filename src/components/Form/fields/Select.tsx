@@ -12,7 +12,7 @@ export const Select = ({ id, options }: SelectPropsType) => {
   const { register } = useFormContext();
   return (
     <>
-      <label htmlFor={id}>{stringFormatter(id)}</label>
+      <label htmlFor={id}>{stringFormatter(id) + " "}</label>
       <select {...register(id)}>
         {options &&
           options.map((child) => {

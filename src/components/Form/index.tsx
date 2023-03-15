@@ -1,28 +1,41 @@
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FormConfigType } from "../../data/data";
+import { formsActions } from "../../features/forms/reducers";
 import { selectAllForms } from "../../features/forms/selector";
 import { FormFactory } from "./formFactory";
 import { MappedFieldType } from "./model";
 
 const onSubmit = (data: any) => console.log(data);
 
-const mapper = (mappedForm: MappedFieldType[]): React.ReactNode => {
-  return mappedForm.map((item) => {
-    return <FormFactory key={item.id} field={item} />;
-  });
-};
-
 export const Form = () => {
   const methods = useForm<FormConfigType>();
 
   const currentForm = useSelector(selectAllForms);
 
+  const dispatch = useDispatch();
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        {mapper(currentForm!)}
+        {currentForm?.map((item) => {
+          return (
+            <div key={item.id}>
+              <FormFactory field={item} />
+              {item.multiple && (
+                <button
+                  type="button"
+                  onClick={() =>
+                    dispatch(formsActions.removeFieldFromSubform(item.id))
+                  }
+                >
+                  Remove {item.id}
+                </button>
+              )}
+            </div>
+          );
+        })}
         <input type="submit" />
       </form>
     </FormProvider>

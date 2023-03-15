@@ -32,26 +32,41 @@ export const FormFactory = ({ field }: FormFactoryPropsType) => {
     return (
       <React.Fragment key={field.id}>
         {field.children.map((child, i) => {
-          const childToMap = child as MappedFieldType[];
           return (
-            <div key={field.type + field.id + i}>
+            <div className="container" key={field.type + field.id + i}>
               <p>{subFormIdMapper(field.id) + "#" + (i + 1)}</p>
-              {childToMap.map((form) => {
-                return <FormFactory field={form} key={form.id} />;
-              })}
-              {childToMap.map((child, i) =>
-                child.type === "subForm" ? (
-                  <div key={child.id + i}>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        dispatch(formsActions.addFieldToSubform(child.id))
-                      }
-                    >
-                      Add a {stringFormatter(child.id)}
-                    </button>
+              {child.map((form) => {
+                return (
+                  <div key={form.id}>
+                    <FormFactory field={form} />
+                    {form.multiple && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            dispatch(formsActions.addFieldToSubform(form.id))
+                          }
+                        >
+                          Add a {stringFormatter(form.id)}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            dispatch(
+                              formsActions.removeFieldFromSubform(form.id)
+                            );
+                            console.log("form ID = ", form.id);
+                          }}
+                        >
+                          Remove {stringFormatter(form.id)}
+                        </button>
+                      </>
+                    )}
                   </div>
-                ) : null
+                );
+              })}
+              {child.map((child, i) =>
+                child.type === "subForm" ? <div key={child.id + i}></div> : null
               )}
             </div>
           );

@@ -5,9 +5,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 code {
@@ -17,4 +14,9 @@ code {
 
 input {
   width: 300px;
+}
+
+.container {
+  padding: 15px;
+  border: 3px solid grey;
 }

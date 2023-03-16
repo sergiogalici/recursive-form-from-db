@@ -17,31 +17,6 @@ const App = () => {
   return (
     <div>
       <Form />
-      <button
-        onClick={() => dispatch(formsActions.addFieldToSubform("children"))}
-      >
-        Add a Child
-      </button>
-      <button onClick={() => dispatch(formsActions.addFieldToSubform("pets"))}>
-        Add a Pet
-      </button>
-      <button
-        onClick={() => dispatch(formsActions.addFieldToSubform("products"))}
-      >
-        Add a Product
-      </button>
-      <button
-        onClick={() =>
-          dispatch(formsActions.removeFieldFromSubform("children"))
-        }
-      >
-        Remove a Child
-      </button>
-      <button
-        onClick={() => dispatch(formsActions.removeFieldFromSubform("pets"))}
-      >
-        Remove a Pet
-      </button>
     </div>
   );
 

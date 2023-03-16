@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FormConfigType } from "../../data/data";
 import { formsActions } from "../../features/forms/reducers";
 import { selectAllForms } from "../../features/forms/selector";
+import { stringFormatter } from "../../utils/stringFormatter";
 import { FormFactory } from "./formFactory";
 import { MappedFieldType } from "./model";
 
@@ -24,14 +25,24 @@ export const Form = () => {
             <div key={item.id}>
               <FormFactory field={item} />
               {item.multiple && (
-                <button
-                  type="button"
-                  onClick={() =>
-                    dispatch(formsActions.removeFieldFromSubform(item.id))
-                  }
-                >
-                  Remove {item.id}
-                </button>
+                <>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      dispatch(formsActions.addFieldToSubform(item.id))
+                    }
+                  >
+                    Add a {stringFormatter(item.id)}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      dispatch(formsActions.removeFieldFromSubform(item.id))
+                    }
+                  >
+                    Remove {stringFormatter(item.id)}
+                  </button>
+                </>
               )}
             </div>
           );

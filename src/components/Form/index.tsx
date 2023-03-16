@@ -6,7 +6,6 @@ import { formsActions } from "../../features/forms/reducers";
 import { selectAllForms } from "../../features/forms/selector";
 import { stringFormatter } from "../../utils/stringFormatter";
 import { FormFactory } from "./formFactory";
-import { MappedFieldType } from "./model";
 
 const onSubmit = (data: any) => console.log(data);
 

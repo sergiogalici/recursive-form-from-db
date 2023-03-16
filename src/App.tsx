@@ -5,6 +5,8 @@ import { formConfigPreMapper } from "./utils/formConfigPreMapper";
 import { formMapper } from "./utils/formMapper";
 import { useDispatch } from "react-redux";
 import { formsActions } from "./features/forms/reducers";
+import { rfhMapper } from "./utils/rhfMapper";
+import { RHFMappedForm } from "./components/RHFMappedForm";
 
 const App = () => {
   // Generate formData dynamically from formConfig and from user choices ?? initialFormData
@@ -14,9 +16,11 @@ const App = () => {
   const dispatch = useDispatch();
   dispatch(formsActions.updateForm(mappedForm));
 
+  const mappedForHook = rfhMapper(mappedForm);
+
   return (
     <div>
-      <Form />
+      <RHFMappedForm />
     </div>
   );
 

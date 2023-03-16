@@ -1,5 +1,4 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { MappedFieldType } from "../../components/Form/model";
 import { RootState } from "../store";
 
 const selectForms = (state: RootState) => state.forms;

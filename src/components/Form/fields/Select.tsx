@@ -5,7 +5,7 @@ import { MappedFieldType } from "../model";
 
 type SelectPropsType = {
   id: string;
-  options: MappedFieldType[];
+  options: MappedFieldType[] | string[];
 };
 
 export const Select = ({ id, options }: SelectPropsType) => {
@@ -15,10 +15,10 @@ export const Select = ({ id, options }: SelectPropsType) => {
       <label htmlFor={id}>{stringFormatter(id) + " "}</label>
       <select {...register(id)}>
         {options &&
-          options.map((child) => {
+          options.map((item) => {
             return (
-              <option key={child.id} value={child.id}>
-                {stringFormatter(child.id)}
+              <option key={item as string} value={item as string}>
+                {stringFormatter(item as string)}
               </option>
             );
           })}
